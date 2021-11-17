@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checking') {
             when {
-                branch "features/masterError"
+                branch "features/*"
             }
             steps {
                 script {
