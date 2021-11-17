@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checking') {
             when {
-                branch "features/masterError"
+                branch "features/*"
             }
             steps {
                 script {
@@ -38,6 +38,12 @@ pipeline {
         }
 
          stage('Building') {
+             agent {
+                            docker {
+                                image 'maven:3.8.1-adoptopenjdk-11'
+                                args '-v /tmp/.m2:/root/.m2'
+                            }
+                        }
             when {
                 branch "master"
             }
@@ -99,8 +105,8 @@ pipeline {
                 steps {
                      script {
                         sh 'docker login -u ${DOCKER_CREDS_USR} -p ${DOCKER_CREDS_PSW}'
-                        sh 'docker tag msmicroservice ${DOCKER_CREDS_USR}/msmicroservice:${BUILD_NUMBER}'
-                        sh 'docker push ${DOCKER_CREDS_USR}/msmicroservice:${env.BUILD_NUMBER}'
+                        sh 'docker tag msmicroservice ${DOCKER_CREDS_USR}/msmicroservice:$BUILD_NUMBER'
+                        sh 'docker push ${DOCKER_CREDS_USR}/msmicroservice:$BUILD_NUMBER'
                      }
                 }
           }

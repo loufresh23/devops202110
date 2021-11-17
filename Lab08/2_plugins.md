@@ -11,6 +11,7 @@
         * "Docker Pipeline"
         * "Copy Artifact"
         * "Maven Integration"
+        * "JaCoCo"
 ## Maven
     
 1. Instalar maven
